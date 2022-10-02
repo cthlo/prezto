@@ -32,3 +32,6 @@
 [submodule "runcoms/tmux/plugins/tpm"]
 	path = runcoms/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "runcoms/fzf"]
+	path = runcoms/fzf
+	url = https://github.com/junegunn/fzf.git
