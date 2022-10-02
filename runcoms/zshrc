@@ -64,3 +64,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # fix Windows FS direcotry ls green background (because they are "others writable") https://unix.stackexchange.com/a/462105
 LS_COLORS+=':ow=01;33'
+
+# bind Ctrl-Backspace to delete word
+bindkey '^H' backward-kill-word
