@@ -1,3 +1,16 @@
+# `cthlo` bootstrap
+
+```console
+git clone --recursive https://github.com/cthlo/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+```
+
+```console
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md; do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+```
+
 # Prezto — Instantly Awesome Zsh
 
 Prezto is the configuration framework for [Zsh][1]; it enriches the command line
@@ -20,7 +33,7 @@ version is **4.3.11**.
 02. Clone the repository:
 
     ```console
-    git clone --recursive https://github.com/cthlo/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
     ```
 
     <details>
@@ -34,7 +47,7 @@ version is **4.3.11**.
       - Clone the repository:
 
         ```console
-        git clone --recursive https://github.com/cthlo/prezto.git "${ZDOTDIR:-${XDG_CONFIG_HOME:-$HOME/.config}/zsh}/.zprezto"
+        git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-${XDG_CONFIG_HOME:-$HOME/.config}/zsh}/.zprezto"
         ```
 
       - Configure `$XDG_CONFIG_HOME` and `$ZDOTDIR` in _`$HOME/.zshenv`_:
@@ -47,11 +60,12 @@ version is **4.3.11**.
 
     </details>
 
-03. Link the configuration files:
+03. Create a new Zsh configuration by copying/linking the Zsh configuration
+    files provided:
 
     ```console
     setopt EXTENDED_GLOB
-    for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md; do
+    for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
       ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
     done
     ```
