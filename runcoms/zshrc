@@ -11,3 +11,53 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# turn off bell: https://blog.vghaisas.com/zsh-beep-sound/
+unsetopt BEEP
+
+alias dc='docker-compose'
+alias kdebug='kubectl exec -n hansonlo -it debuggery -- zsh || kubectl run -n hansonlo --rm -it debuggery --image=rameezk/debuggery --restart=Never --port=5432 --overrides="{\"spec\":{\"template\":{\"spec\":{\"nodeSelector\":{\"kubernetes.io/hostname\":\"gke-rk-cac-dev-default-node-pool-52b6756e-89ex\"}}}}}"'
+alias grepi='grep -i'
+alias ll='ls -al'
+
+rdslogs() {
+    local rds_instance=$1 # stg-pm-solutions
+    local filter=$2 # 2018-09-21-0[123]
+    aws rds describe-db-log-files --db-instance-identifier "$rds_instance" | jq '.DescribeDBLogFiles[].LogFileName' -r | sort | grep "error/postgresql.log.${filter}" | while read -r f; do aws rds download-db-log-file-portion --db-instance-identifier "$rds_instance" --log-file-name "$f" | jq '.LogFileData' -r || break; done
+}
+
+alias k='kubectl'
+# set up kubectl autocomplete if it exists
+command -v kubectl > /dev/null && source <(kubectl completion zsh) && complete -F __start_kubectl k
+export KUBE_EDITOR=vim
+
+# https://stackoverflow.com/questions/57591432/gpg-signing-failed-inappropriate-ioctl-for-device-on-macos-with-maven
+export GPG_TTY=$(tty)
+
+# Use git from Windows when dealing with Windows FS
+git() {
+    if [[ $(pwd) == /mnt/c/* ]]; then
+        /mnt/c/Program\ Files/Git/mingw64/bin/git.exe $*
+    else
+        /usr/bin/git $*
+    fi
+}
+
+# pyenv (taken care of by prezto python module)
+# export PYENV_ROOT="$HOME/.pyenv"
+# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+
+# pyenv-virtualenv (taken care of by prezto python module)
+# eval "$(pyenv virtualenv-init -)"
+
+# starship
+eval "$(starship init zsh)"
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
