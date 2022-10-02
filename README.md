@@ -47,12 +47,11 @@ version is **4.3.11**.
 
     </details>
 
-03. Create a new Zsh configuration by copying/linking the Zsh configuration
-    files provided:
+03. Link the configuration files:
 
     ```console
     setopt EXTENDED_GLOB
-    for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md; do
       ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
     done
     ```
