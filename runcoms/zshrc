@@ -67,3 +67,7 @@ LS_COLORS+=':ow=01;33'
 
 # bind Ctrl-Backspace to delete word
 bindkey '^H' backward-kill-word
+
+# Deno
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
